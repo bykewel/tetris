@@ -1,0 +1,346 @@
+#include<stdio.h>
+#include<time.h>
+#define SIZE 15
+
+int main(){
+	printf("------LET'S PLAY TETRIS------\n");
+	int i,z,j,k,N,M,L,x,y,exit=0,secilen,istenilen_sekil,yer_satir;
+	int screen[SIZE][SIZE],B[SIZE][SIZE],C[SIZE][SIZE];
+	int yer_sutun;
+	int D[SIZE],SHAPE[SIZE][SIZE];
+	printf("Tetrisin oynanacagi zemininin boyutlarini giriniz:\n");
+	printf("Min: 5x5 -- Max: 15x15\n");
+	printf("Satir sayisi: ");
+	scanf("%d",&N);	
+	printf("Sutun sayisi: ");
+	scanf("%d",&M);
+	
+	if(N<5){
+		N=5;
+	}
+	else if(N>15){
+		N=15;
+	}
+	if(M<5){
+		M=5;
+	}
+	else if (M>15){
+		M=15;
+	}
+	
+	for(i=0;i<N;i++){
+		for(j=0;j<M;j++){
+			screen[i][j]= 0 ;	
+		}
+	}
+	int puan = 0;
+	printf("\n");
+	printf("------OYUN EKRANI------\n");
+		for(i=0;i<N;i++){
+			for(j=0;j<M;j++){
+				printf("%d ",screen[i][j]);	
+			}
+	printf("\n");
+		}
+	printf("Puaniniz: %d\n",puan);
+	printf("\n\n");
+	while(exit == 0){
+		
+        srand(time(NULL));
+        secilen = rand() % 5;
+        printf("--Yerlestirilecek Sekil:--\n");
+        if(secilen == 0){
+        	printf("11\n");
+        	printf("11\n");
+		}
+		else if (secilen == 1){
+			printf("11 \n");
+			printf(" 1 \n");
+			printf(" 11 \n");
+		
+		}
+		else if (secilen == 2){
+			printf("111\n");
+				
+		}
+        else if (secilen == 3){
+        	printf("1\n");
+		}
+        else if (secilen == 4){
+        	printf("111\n");
+        	printf(" 1 \n");
+		}
+       printf("\n");
+       printf("###############\n");
+       printf("1) Oyunu Bitir\n");
+       printf("2) Sekli Yerlestir\n");
+       printf("###############\n");
+	   int komut;
+       scanf("\n%d",&komut);
+	   if(komut == 1){ // OYUNU BITIRME
+	   	printf("GAME OVER!\n");
+	   	exit = 1;
+	   	printf("PUAN: %d\n",puan);
+	   	if(puan == 0){
+	   		printf("Keske biraz puan kazansaydin kardes!");
+		   }
+	   } 
+       else if(komut == 2){ // SEKLI YERLESTIRME
+	   printf("--Yerlestirilecek Sekil:--\n");
+        if(secilen == 0){
+        	printf("11\n");
+        	printf("11\n");
+        	printf("Bu sekil icin tum durumlari aynidir!\n");
+        	printf("\nSeklin ustune gore yerlestirmek istediginiz satiri giriniz:(x)");
+        	scanf("%d",&yer_satir);
+        	printf("\nSeklin soluna gore yerlestirmek istediginiz sutunu giriniz:(y)");
+        	scanf("%d",&yer_sutun);
+        	
+        	
+        	if(screen[yer_satir-1][yer_sutun-1]==0 && screen[yer_satir][yer_sutun-1]==0 && screen[yer_satir-1][yer_sutun]==0 && screen[yer_satir][yer_sutun]==0 ){
+        		screen[yer_satir-1][yer_sutun-1]=1; 
+				screen[yer_satir][yer_sutun-1]=1;
+				screen[yer_satir-1][yer_sutun]=1; 
+				screen[yer_satir][yer_sutun]=1;
+			}
+			else{
+					printf("Secilen konuma yerlestiremezsiniz!\n");
+					exit=1;
+				}
+        	
+		}
+		else if (secilen == 1){
+			printf("11      11  \n");
+			printf(" 1      1\n");
+			printf(" 11    11\n"); 
+			printf(" [1]  -   [2]\n");
+			printf("SEKLIN ISTEDIGINIZ YONUNU SECINIZ!\n");
+			scanf("%d",&istenilen_sekil);
+			
+			if(istenilen_sekil == 1){
+			printf("\nSeklin ustune gore yerlestirmek istediginiz satiri giriniz:(x)");
+        	scanf("%d",&yer_satir);
+        	printf("\nSeklin soluna gore yerlestirmek istediginiz sutunu giriniz:(y)");
+        	scanf("%d",&yer_sutun);
+        	
+        	
+        	if(screen[yer_satir-1][yer_sutun-1]==0 && screen[yer_satir][yer_sutun]==0 && screen[yer_satir-1][yer_sutun]==0 && screen[yer_satir+1][yer_sutun]==0 && screen[yer_satir+1][yer_sutun+1]==0 ){
+        		screen[yer_satir-1][yer_sutun-1]=1; 
+				screen[yer_satir][yer_sutun]=1;
+				screen[yer_satir-1][yer_sutun]=1;
+				screen[yer_satir+1][yer_sutun]=1;
+				screen[yer_satir+1][yer_sutun+1]=1;
+			}
+			else{
+					printf("Secilen konuma yerlestiremezsiniz!\n");
+					exit =1;
+				}
+			
+			}
+			if(istenilen_sekil == 2){
+			printf("\nSeklin altina gore yerlestirmek istediginiz satiri giriniz:(x)");
+        	scanf("%d",&yer_satir);
+        	printf("\nSeklin soluna gore yerlestirmek istediginiz sutunu giriniz:(y)");
+        	scanf("%d",&yer_sutun);
+        	
+        	
+        	if(screen[yer_satir-1][yer_sutun-1]==0 && screen[yer_satir-1][yer_sutun]==0 && screen[yer_satir-2][yer_sutun]==0 && screen[yer_satir-3][yer_sutun]==0 && screen[yer_satir-3][yer_sutun+1]==0 && yer_sutun<(M-1) ){
+        		screen[yer_satir-1][yer_sutun-1]=1; 
+				screen[yer_satir-1][yer_sutun]=1; 
+				screen[yer_satir-2][yer_sutun]=1; 
+				screen[yer_satir-3][yer_sutun]=1;
+				screen[yer_satir-3][yer_sutun+1]=1;
+			}
+			else{
+					printf("Secilen konuma yerlestiremezsiniz!\n");
+					exit =1;
+				}
+			}
+		
+		}
+		else if (secilen == 2){
+
+			printf("111    1\n");
+			printf("       1\n");
+			printf("       1\n");
+			printf("1  -    2 \n");
+			printf("SEKLIN ISTEDIGINIZ YONUNU SECINIZ!\n");
+			scanf("%d",&istenilen_sekil);
+		
+			if(istenilen_sekil == 1){
+				printf("\nSeklin soluna gore yerlestirmek istediginiz satiri giriniz:(x)");
+        		scanf("%d",&yer_satir);
+        		printf("\nSeklin soluna gore yerlestirmek istediginiz sutunu giriniz:(y)");
+        		scanf("%d",&yer_sutun);
+        	
+        	
+        		if(screen[yer_satir-1][yer_sutun-1]==0 && screen[yer_satir-1][yer_sutun]==0 && screen[yer_satir-1][yer_sutun+1]==0 ){
+        			screen[yer_satir-1][yer_sutun-1]=1;
+					screen[yer_satir-1][yer_sutun]=1;
+					screen[yer_satir-1][yer_sutun+1]=1; 
+					
+				}
+				else{
+					printf("Secilen konuma yerlestiremezsiniz!\n");
+					exit =1;
+				}
+			}
+			
+			
+			if(istenilen_sekil == 2){
+				printf("\nSeklin ustune gore yerlestirmek istediginiz satiri giriniz:(x)");
+        		scanf("%d",&yer_satir);
+        		printf("\nSeklin ustune gore yerlestirmek istediginiz sutunu giriniz:(y)");
+        		scanf("%d",&yer_sutun);
+        	
+        	
+        		if(screen[yer_satir-1][yer_sutun-1]==0 && screen[yer_satir][yer_sutun-1]==0 && screen[yer_satir+1][yer_sutun-1]==0 ){
+        			screen[yer_satir-1][yer_sutun-1]=1;
+					screen[yer_satir][yer_sutun-1]=1;
+					screen[yer_satir+1][yer_sutun-1]=1; 
+					
+				}
+			}
+			
+			
+			
+			
+		 }
+        else if (secilen == 3){
+        	printf("Bu sekil icin tum durumlari aynidir!\n");
+        	printf("\n");
+        	printf("\nSekli yerlestirmek istediginiz satiri giriniz:(x)");
+        	scanf("%d",&yer_satir);
+        	printf("\nSekli yerlestirmek istediginiz sutunu giriniz:(y)");
+        	scanf("%d",&yer_sutun);
+        	
+        	
+        	if(screen[yer_satir-1][yer_sutun-1]==0 ){
+        		screen[yer_satir-1][yer_sutun-1]=1;
+			 			
+			}		
+			else{
+				printf("Secilen konuma yerlestiremezsiniz!\n");
+				exit =1;
+			}
+			
+		}
+        else if (secilen == 4){
+        	printf("111     1       1  \n");
+        	printf(" 1     111      11 \n");
+        	printf("                1 \n");
+        	printf(" 1 -    2   -    3\n");
+        	printf("SEKLIN ISTEDIGINIZ YONUNU SECINIZ:\n");
+			scanf("%d",&istenilen_sekil);
+			printf("\n");
+        	
+			if(istenilen_sekil == 1){
+        	printf("\nSekli sol uste gore yerlestirmek istediginiz satiri giriniz:(x)");
+        	scanf("%d",&yer_satir);
+        	printf("\nSekli sol uste gore yerlestirmek istediginiz sutunu giriniz:(y)");
+        	scanf("%d",&yer_sutun);
+        	
+        	
+        	if(screen[yer_satir-1][yer_sutun-1]==0 && screen[yer_satir-1][yer_sutun]==0 && screen[yer_satir-1][yer_sutun+1]==0 && screen[yer_satir][yer_sutun]==0 ){
+        		screen[yer_satir-1][yer_sutun-1]=1;
+				screen[yer_satir-1][yer_sutun]=1;
+				screen[yer_satir-1][yer_sutun+1]=1;
+				screen[yer_satir][yer_sutun]=1;
+			 			
+			}		
+			else{
+				printf("Secilen konuma yerlestiremezsiniz!\n");
+				exit =1;
+			}
+			}
+			
+			
+			if(istenilen_sekil == 2){
+				
+			printf("\nSekli sol alta gore yerlestirmek istediginiz satiri giriniz:(x)");
+        	scanf("%d",&yer_satir);
+        	printf("\nSekli sol alta gore yerlestirmek istediginiz sutunu giriniz:(y)");
+        	scanf("%d",&yer_sutun);
+        	
+        	
+        	if(screen[yer_satir-1][yer_sutun-1]==0 && screen[yer_satir-1][yer_sutun]==0 && screen[yer_satir-1][yer_sutun+1]==0 && screen[yer_satir-2][yer_sutun]==0 ){
+        		screen[yer_satir-1][yer_sutun-1]=1;
+				screen[yer_satir-1][yer_sutun]=1;
+				screen[yer_satir-1][yer_sutun+1]=1;
+				screen[yer_satir-2][yer_sutun]=1;
+			 			
+			}		
+			else{
+				printf("Secilen konuma yerlestiremezsiniz!\n");
+				exit =1;
+			}
+			}
+			
+			
+			if(istenilen_sekil == 3){
+				
+			printf("\nSekli sol uste gore yerlestirmek istediginiz satiri giriniz:(x)");
+        	scanf("%d",&yer_satir);
+        	printf("\nSekli sol uste gore yerlestirmek istediginiz sutunu giriniz:(y)");
+        	scanf("%d",&yer_sutun);
+        	
+        	
+        	if(screen[yer_satir-1][yer_sutun-1]==0 && screen[yer_satir][yer_sutun-1]==0 && screen[yer_satir+1][yer_sutun-1]==0 && screen[yer_satir][yer_sutun]==0 ){
+        		screen[yer_satir-1][yer_sutun-1]=1;
+				screen[yer_satir][yer_sutun-1]=1;
+				screen[yer_satir+1][yer_sutun-1]=1;
+				screen[yer_satir][yer_sutun]=1;
+			 			
+			}		
+			else{
+				printf("Secilen konuma yerlestiremezsiniz!\n");
+				exit =1;
+			}
+			}
+        	
+		}
+	   
+	   puan=puan+100;
+	   
+	   printf("\n------OYUN EKRANI------\n");
+		for(i=0;i<N;i++){
+			for(j=0;j<M;j++){
+				printf("%d ",screen[i][j]);	
+			}
+		printf("\n");
+		}
+		printf("Puaniniz: %d\n",puan);
+		printf("\n\n");
+		
+		
+	}
+	
+	}
+	if(exit == 1 ){
+		printf("\n#### GAME OVER! ####");
+	}
+	
+	return 0;
+}
+
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
